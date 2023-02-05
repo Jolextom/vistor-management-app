@@ -17,8 +17,9 @@ const auth = async (req, res, next) => {
 
         req.user = {userId:payload.userId, name:payload.name}
         next()
+        
     } catch (error) {
-        throw new customError.Unauthorized('Authentication Invalid')
+        throw new customError.Unauthorized('Invalid Token')
     }
 }
 

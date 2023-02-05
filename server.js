@@ -6,6 +6,7 @@ const mongoose = require("mongoose")
 const app = express()
 const errorHandlerMiddleware = require('./middlewares/error-handler')
 const notFoundMiddleware = require('./middlewares/not-found')
+const auth = require('./middlewares/authentication')
 
 // routes
 const authRoutes = require('./routes/auth')
@@ -14,7 +15,7 @@ const visitRoutes = require('./routes/visit')
 app.use(express.json())
 
 app.use('/api/v1', authRoutes)
-app.use('/api/v1', visitRoutes)
+app.use('/api/v1', auth, visitRoutes)
 
 app.use(errorHandlerMiddleware)
 app.use(notFoundMiddleware)
