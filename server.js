@@ -10,12 +10,14 @@ const auth = require('./middlewares/authentication')
 
 // routes
 const authRoutes = require('./routes/auth')
+const inviteRoutes = require('./routes/invite')
 const visitRoutes = require('./routes/visit')
 
 app.use(express.json())
 
 app.use('/api/v1', authRoutes)
-app.use('/api/v1', auth, visitRoutes)
+app.use('/api/v1/invite', auth, inviteRoutes)
+app.use('/api/v1/visit', auth, visitRoutes)
 
 app.use(errorHandlerMiddleware)
 app.use(notFoundMiddleware)
