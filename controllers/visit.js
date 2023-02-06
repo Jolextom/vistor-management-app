@@ -7,7 +7,7 @@ const getSingleVisitor = (req, res) => {
 const createVisitor = (req, res) => {
     res.send('create a visitor')
 }
-const updateVistor = (req, res) => {
+const updateVisitor = (req, res) => {
     res.send('update a visitor')
 }
 const deleteVisitor = (req, res) => {
@@ -18,6 +18,6 @@ module.exports = {
     getAllVisitors,
     getSingleVisitor,
     createVisitor,
-    updateVistor,
+    updateVisitor,
     deleteVisitor
 }
