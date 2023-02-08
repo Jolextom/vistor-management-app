@@ -1,17 +1,41 @@
-const getAllInvites = (req, res) => {
-    res.send('getting all Invites')
+const Invite = require('../models/Invite')
+const customError = require('http-errors')
+
+const getAllInvites = async (req, res) => {
+    const invite = await Invite.find({host:req.user.name})
+    res.status(200).json({count:invite.length, invite})
 }
-const getSingleInvite = (req, res) => {
-    res.send('get a Invite')
+const getSingleInvite = async (req, res) => {
+    const {params:{id:inviteId}, user:{name}} = req
+
+    const invite = await Invite.findOne({host:name, _id:inviteId})
+    if(!invite){
+        throw new customError.NotFound(`Invite with id ${inviteId} not found`)
+    }
+    res.status(200).json(invite)
 }
-const createInvite = (req, res) => {
-    res.send('create a Invite')
+const createInvite = async (req, res) => {
+    req.body.host = req.user.name
+    const invite = await Invite.create(req.body)
+    res.status(201).json(invite)
 }
-const updateInvite = (req, res) => {
-    res.send('update a Invite')
+const updateInvite = async (req, res) => {
+    const {params:{id:inviteId}, user:{name}} = req
+
+    const invite = await Invite.findOneAndUpdate({host:name, _id:inviteId}, req.body, {new:true, runValidators:true})
+    if(!invite){
+        throw new customError.NotFound(`Invite with id ${inviteId} not found`)
+    }
+    res.status(200).json(invite)
 }
-const deleteInvite = (req, res) => {
-    res.send('delete a Invite')
+const deleteInvite = async (req, res) => {
+    const {params:{id:inviteId}, user:{name}} = req
+
+    const invite = await Invite.findOneAndDelete({host:name, _id:inviteId})
+    if(!invite){
+        throw new customError.NotFound(`Invite with id ${inviteId} not found`)
+    }
+    res.status(200).json("Done")
 }
 
 module.exports = {

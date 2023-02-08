@@ -15,11 +15,12 @@ const inviteSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    required: true
+    required: true,
+    default:Date.now
   },
   time: {
     type: String,
-    required: true
+    required: true,
   },
   purpose: {
     type: String,
